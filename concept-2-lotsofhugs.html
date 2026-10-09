@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Horizons — Concept 2 (Lots of Hugs style)</title>
+  <!-- Concept 2: modelled on lotsofhugschildcare.co.nz — phone/enquire top bar, full-bleed photo
+       hero (crossfading), "Kia ora" welcome, UPPERCASE underlined headings, alternating
+       text/image rows, why-choose-us checklist, Te Whāriki block, book-a-tour band + enquiry form. -->
+  <link rel="stylesheet" href="https://use.typekit.net/gil0rcy.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --tangerine: #ffb800;
+      --big-yellow: #f2cb56;
+      --card: #fadd8f;
+      --cream: #fff8e6;
+      --button: #f0c051;
+      --dark-orange: #e8671c;
+      --ink: #3d3028;
+      --muted: #6b5a4d;
+      --white: #fff;
+      --heading: cooper-black-std, "Cooper Black", "Fredoka", serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Nunito", system-ui, sans-serif; color: var(--ink); background: var(--white); line-height: 1.7; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--heading); font-weight: 400; line-height: 1.15; }
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+    /* Top bar */
+    .topbar { background: var(--tangerine); font-weight: 700; font-size: .95rem; }
+    .topbar .wrap { display: flex; justify-content: flex-end; gap: 1.5rem; padding-top: 8px; padding-bottom: 8px; }
+    .topbar a { text-decoration: none; }
+    .topbar .enq { background: var(--ink); color: var(--white); padding: 2px 14px; border-radius: 999px; }
+
+    /* Header */
+    header { background: var(--white); position: sticky; top: 0; z-index: 40; border-bottom: 4px solid var(--card); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; padding-bottom: 12px; }
+    .brand img { height: 78px; width: auto; }
+    .menu { display: flex; list-style: none; gap: 2rem; font-weight: 800; text-transform: uppercase; font-size: .95rem; letter-spacing: .04em; }
+    .menu a { text-decoration: none; }
+    .menu a:hover, .menu a.active { color: var(--dark-orange); }
+    .burger { display: none; background: none; border: 0; font-size: 1.8rem; cursor: pointer; }
+
+    /* Hero slider */
+    .hero { position: relative; height: min(78vh, 680px); min-height: 440px; overflow: hidden; color: var(--white); }
+    .hero .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
+    .hero .slide.on { opacity: 1; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(61,48,40,.75) 0%, rgba(61,48,40,.25) 60%, rgba(61,48,40,0) 100%); }
+    .hero .wrap { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); max-width: 640px; margin-bottom: 1rem; }
+    .hero p { font-size: 1.25rem; max-width: 520px; margin-bottom: 2rem; }
+    .btn { display: inline-block; padding: 14px 30px; border-radius: 8px; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: .05em; transition: transform .2s, background .2s; border: 0; cursor: pointer; font-size: 1rem; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-yellow { background: var(--tangerine); color: var(--ink); }
+    .btn-yellow:hover { background: var(--big-yellow); }
+    .btn-dark { background: var(--ink); color: var(--white); }
+    .dots { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 10px; }
+    .dots button { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--white); background: transparent; cursor: pointer; }
+    .dots button.on { background: var(--tangerine); border-color: var(--tangerine); }
+
+    section { padding: 80px 0; }
+    .ul-head { text-transform: uppercase; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: .03em; display: inline-block; padding-bottom: 10px; margin-bottom: 1.5rem; border-bottom: 5px solid var(--tangerine); }
+    .center { text-align: center; }
+
+    /* Welcome */
+    .welcome { text-align: center; }
+    .welcome h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 1.25rem; color: var(--dark-orange); }
+    .welcome p { max-width: 780px; margin: 0 auto 1rem; font-size: 1.15rem; color: var(--muted); }
+    .welcome strong { color: var(--ink); }
+
+    /* Location card */
+    .location { background: var(--cream); }
+    .loc-card { display: grid; grid-template-columns: 1.2fr 1fr; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(61,48,40,.1); }
+    .loc-card img { width: 100%; height: 100%; object-fit: cover; min-height: 320px; max-height: 420px; }
+    .loc-card .info { padding: 40px; }
+    .loc-card h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .loc-card dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin-bottom: 1.5rem; }
+    .loc-card dt { font-size: 1.2rem; }
+    .loc-card dd a { text-decoration: none; font-weight: 700; }
+
+    /* Alternating rows */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .row + .row { margin-top: 90px; }
+    .row.flip .media { order: 2; }
+    .row .media img { border-radius: 16px; width: 100%; aspect-ratio: 4/3; object-fit: cover; box-shadow: 14px 14px 0 var(--card); }
+    .row p { color: var(--muted); font-size: 1.08rem; margin-bottom: 1rem; }
+    .checks { list-style: none; margin: 1rem 0 1.5rem; }
+    .checks li { padding-left: 36px; position: relative; margin-bottom: 10px; font-weight: 600; }
+    .checks li::before { content: "✓"; position: absolute; left: 0; top: 1px; width: 24px; height: 24px; border-radius: 50%; background: var(--tangerine); display: grid; place-items: center; font-size: .85rem; font-weight: 800; }
+
+    /* Why grid */
+    .why { background: var(--ink); color: var(--white); }
+    .why .ul-head { border-color: var(--tangerine); }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 1rem; }
+    .why-grid div { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 24px; }
+    .why-grid .ico { font-size: 2rem; margin-bottom: 6px; }
+    .why-grid h3 { color: var(--tangerine); font-size: 1.15rem; margin-bottom: 6px; }
+    .why-grid p { font-size: .95rem; opacity: .85; }
+
+    /* CTA band */
+    .band { background: var(--tangerine); padding: 60px 0; text-align: center; }
+    .band h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 1.25rem; }
+
+    /* Enquiry */
+    .enquiry .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; }
+    .enquiry p { color: var(--muted); margin-bottom: 1rem; }
+    form { background: var(--cream); padding: 32px; border-radius: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    form label { font-weight: 700; font-size: .9rem; display: block; margin-bottom: 4px; }
+    form input, form select, form textarea { width: 100%; padding: 12px 14px; border: 2px solid var(--card); border-radius: 8px; font: inherit; background: var(--white); }
+    form input:focus, form textarea:focus, form select:focus { outline: none; border-color: var(--dark-orange); }
+    form .full { grid-column: 1 / -1; }
+    .map { border: 0; width: 100%; height: 240px; border-radius: 16px; margin-top: 1rem; }
+
+    footer { background: var(--card); padding: 30px 0; font-size: .9rem; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { text-decoration: none; font-weight: 700; margin-left: 1rem; }
+
+    @media (max-width: 900px) {
+      .menu { display: none; }
+      .burger { display: block; }
+      header.open .menu { display: flex; flex-direction: column; position: absolute; left: 0; right: 0; top: 100%; background: var(--white); padding: 12px 20px 20px; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,.08); }
+      .loc-card, .row, .enquiry .wrap { grid-template-columns: 1fr; gap: 2rem; }
+      .row.flip .media { order: 0; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .topbar .wrap { justify-content: space-between; }
+      .brand img { height: 60px; }
+      .why-grid, form { grid-template-columns: 1fr; }
+      .loc-card .info, form { padding: 24px; }
+      section { padding: 60px 0; }
+      .row .media img { box-shadow: 8px 8px 0 var(--card); }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="tel:063558501">📞 (06) 355 8501</a>
+      <a class="enq" href="#enquire">Enquire now</a>
+    </div>
+  </div>
+
+  <header id="hdr">
+    <div class="wrap nav">
+      <a class="brand" href="#"><img src="images/logo.jpg" alt="Happy Horizons Childcare Center" /></a>
+      <ul class="menu">
+        <li><a class="active" href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Enrolment</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact us</a></li>
+      </ul>
+      <button class="burger" aria-label="Open menu" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:0">
+    <div class="slide on" style="background-image:url(images/img3.jpg)"></div>
+    <div class="slide" style="background-image:url(images/img17.jpg)"></div>
+    <div class="slide" style="background-image:url(images/img9.jpg)"></div>
+    <div class="wrap">
+      <h1>Growing happy, confident learners</h1>
+      <p>Imagine your child growing up in a space full of love, laughter and learning.</p>
+      <div><a class="btn btn-yellow" href="#">Learn more</a></div>
+    </div>
+    <div class="dots"></div>
+  </section>
+
+  <section class="welcome">
+    <div class="wrap">
+      <h2>Kia ora, welcome to Happy Horizons</h2>
+      <p>Our mission is to foster <strong>a love of learning and a sense of wonder in every child</strong>. We provide a <strong>caring, engaging and inclusive space</strong> that encourages curiosity, creativity and confidence.</p>
+      <p>Located in <strong>Tākaro, Palmerston North</strong>, we're a close-knit centre where every child, family and staff member is treated with kindness, empathy and respect.</p>
+    </div>
+  </section>
+
+  <section class="location">
+    <div class="wrap">
+      <div class="center"><h2 class="ul-head">Our Palmerston North centre</h2></div>
+      <div class="loc-card">
+        <img src="images/img11.jpg" alt="Happy Horizons centre entrance" />
+        <div class="info">
+          <h3>Happy Horizons Tākaro</h3>
+          <dl>
+            <dt>📍</dt><dd>28 Shamrock Street, Tākaro, Palmerston North</dd>
+            <dt>📞</dt><dd><a href="tel:063558501">(06) 355 8501</a> · <a href="tel:0211960335">(021) 196 0335</a></dd>
+            <dt>✉️</dt><dd><a href="mailto:admin@happyhorizons.nz">admin@happyhorizons.nz</a></dd>
+            <dt>🕢</dt><dd>Monday – Friday, 7.30am – 5.30pm</dd>
+          </dl>
+          <a class="btn btn-dark" href="#">More details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="row">
+        <div class="media"><img src="images/img7.jpg" alt="Children's hands together" /></div>
+        <div>
+          <h2 class="ul-head">Our philosophy</h2>
+          <p>We believe childhood should be filled with laughter, friendship and meaningful experiences. Children learn best through play, exploration and discovery — and our fantastic team inspire curiosity, creativity and a lifelong love of learning.</p>
+          <p>We celebrate diversity and foster a strong sense of belonging, working hand-in-hand with families to support each child's growth, development and happiness.</p>
+        </div>
+      </div>
+      <div class="row flip">
+        <div class="media"><img src="images/img12.jpg" alt="Learning wall with shapes and letters" /></div>
+        <div>
+          <h2 class="ul-head">Our curriculum</h2>
+          <p>Our programme is guided by Te Whāriki, the New Zealand early childhood curriculum, and built around play-based learning that grows the whole child.</p>
+          <ul class="checks">
+            <li>Creative arts — painting, drawing &amp; crafts</li>
+            <li>Early literacy — storytime, phonics &amp; language</li>
+            <li>Math &amp; science through hands-on exploration</li>
+            <li>Music, movement &amp; physical development</li>
+            <li>Safe, supervised outdoor play</li>
+          </ul>
+          <a class="btn btn-yellow" href="#">See our programme</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="wrap">
+      <div class="center"><h2 class="ul-head">Why choose us?</h2></div>
+      <div class="why-grid">
+        <div><div class="ico">🤗</div><h3>Just like family</h3><p>A safe, loving environment where every child feels seen and valued.</p></div>
+        <div><div class="ico">🛡️</div><h3>Safety first</h3><p>Well documented safety policies and high standards of care.</p></div>
+        <div><div class="ico">🌱</div><h3>Always growing</h3><p>Ongoing professional development for our teaching team.</p></div>
+        <div><div class="ico">🕢</div><h3>Full-day hours</h3><p>Open Monday to Friday, 7.30am – 5.30pm.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <h2>Contact us now for a tour of our centre</h2>
+      <a class="btn btn-dark" href="#enquire">Book now</a>
+    </div>
+  </div>
+
+  <section class="enquiry" id="enquire">
+    <div class="wrap">
+      <div>
+        <h2 class="ul-head">Enquire today</h2>
+        <p>Have a question or want to come and see us? Fill in the form and our team will get back to you.</p>
+        <p><strong>📞 (06) 355 8501</strong><br /><strong>✉️ admin@happyhorizons.nz</strong></p>
+        <iframe class="map" loading="lazy" title="Map" src="https://www.google.com/maps?q=28+Shamrock+Street,+Takaro,+Palmerston+North&output=embed"></iframe>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('Demo only — this form is not connected.');">
+        <div><label for="n">Your name</label><input id="n" required /></div>
+        <div><label for="p">Phone</label><input id="p" type="tel" /></div>
+        <div class="full"><label for="e">Email</label><input id="e" type="email" required /></div>
+        <div><label for="c">Child's age</label><select id="c"><option>Under 1</option><option>1 – 2 years</option><option>2 – 3 years</option><option>3 – 5 years</option></select></div>
+        <div><label for="s">Start date</label><input id="s" type="month" /></div>
+        <div class="full"><label for="m">Message</label><textarea id="m" rows="4"></textarea></div>
+        <div class="full"><button class="btn btn-yellow" type="submit">Send enquiry</button></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Happy Horizons Childcare Center. All rights reserved.</span>
+      <span><a href="#">Privacy policy</a><a href="#">Contact us</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Simple crossfade hero slider
+    const slides = document.querySelectorAll('.hero .slide');
+    const dots = document.querySelector('.hero .dots');
+    let i = 0;
+    const show = n => {
+      slides[i].classList.remove('on'); dots.children[i].classList.remove('on');
+      i = n; slides[i].classList.add('on'); dots.children[i].classList.add('on');
+    };
+    slides.forEach((_, n) => {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Slide ' + (n + 1));
+      if (n === 0) b.className = 'on';
+      b.onclick = () => show(n);
+      dots.appendChild(b);
+    });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => show((i + 1) % slides.length), 5000);
+  </script>
+</body>
+</html>
